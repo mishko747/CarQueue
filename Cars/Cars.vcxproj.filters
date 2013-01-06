@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="CarsQueue">
-      <UniqueIdentifier>{d4676acf-e2a5-46cb-81de-5b51ad98184a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Brand">
       <UniqueIdentifier>{45ccbdf6-e272-4393-93e7-3812216f1c42}</UniqueIdentifier>
     </Filter>
@@ -26,9 +23,6 @@
   <ItemGroup>
     <ClInclude Include="Cars.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CarsQueue.h">
-      <Filter>CarsQueue</Filter>
     </ClInclude>
     <ClInclude Include="Brand.h">
       <Filter>Brand</Filter>
@@ -44,9 +38,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CarsQueue.cpp">
-      <Filter>CarsQueue</Filter>
-    </ClCompile>
     <ClCompile Include="Cars.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
