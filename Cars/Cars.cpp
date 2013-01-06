@@ -1,6 +1,7 @@
 
 #include "Cars.h"
-#include "CarsQueue.h"
+//#include "CarsQueue.h"
+#include "QCars.h"
 #include <iostream>
 #include <stdlib.h>
 
@@ -10,7 +11,6 @@ void main ( void )
 	using std::cout;
 	using std::endl;
 
-	CarsQueue *q = new CarsQueue();
 	Item *i = new Item;
 
 	i->name = "mixan";
@@ -20,31 +20,60 @@ void main ( void )
 	i->milleage = 324231;
 
 	Item *j = new Item;
-	j->name = new char[10];
 
-	cout<< "Input name: ";
-	cin>> j->name;
-
+	j->name = "mishko";
 	j->brand = BMW;
-	j->year = 1998;
-	j->color = 324;
-	j->milleage = 324231;
+	j->year = 2006;
+	j->color = 235;
+	j->milleage = 183473;
 
-	q->Add( i );
-	q->Add( j );
-	q->Output();
+	Item *k = new Item;
+
+	k->name = "Oleg";
+	k->brand = MERCEDES;
+	k->year = 1754;
+	k->color = 111;
+	k->milleage = 14326;
+
+	QCars *qc;
+	try
+	{
+		qc = new QCars(); 
+	}
+	catch( std::bad_alloc & ba )
+	{
+		std::cout<< "Error:" << ba.what() << endl;
+		system("pause");
+		exit(1);
+	}
+
+	std::cout<< "Add i: " << qc->AddItem(*i) << std::endl;
+	std::cout<< "Add j: " << qc->AddItem(*j) << std::endl;
+	std::cout<< "Add k: " << qc->AddItem(*k) << std::endl;
 	
-	if( q->Compact() == false )
-	{
-		cout<< "Compact() == false\n";
-	}
-	else
-	{
-		cout<< "Compact() == true\n";
-	}
+	std::cout<< "Del: " << qc->DelItem() << std::endl;
 
-	delete i;
-	delete q;
+	std::cout << "Compact: " << qc->Compact() << std::endl;
+
+	std::cout<< "Del: " << qc->DelItem() << std::endl;
+		
+	int n = 1;
+	int q = 1;
+
+	for( ; n < 20 ; n++)
+		std::cout<< "#" << n << "\tAdd j: " << qc->AddItem(*k) << std::endl;
+	
+	for( ; q < 15 ; q++)
+	std::cout<< "Del: " << qc->DelItem() << std::endl;
+
+	for( ; n < 40 ; n++)
+		std::cout<< "#" << n + 1 << "\tAdd j: " << qc->AddItem(*k) << std::endl;
+
+	qc->Output();
+
+
+
+	delete qc;
 
 	system("pause");
 }

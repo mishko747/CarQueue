@@ -79,10 +79,12 @@
     <ClInclude Include="CarsQueue.h" />
     <ClInclude Include="EnumHelperPost.h" />
     <ClInclude Include="EnumHelperPre.h" />
+    <ClInclude Include="QCars.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cars.cpp" />
     <ClCompile Include="CarsQueue.cpp" />
+    <ClCompile Include="QCars.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
