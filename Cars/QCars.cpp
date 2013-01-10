@@ -8,9 +8,58 @@
 #include "QCars.h"
 
 #include <iostream>
-#include <new>
 
-// Constructor without parameters
+
+Item* InputItem ( void )
+{
+	using std::cout;
+	using std::cin;
+	using std::endl;
+
+	char *buff = new char[AVR_NAME_LEN];
+
+	cout<<"Enter the name of the car owner: ";
+	cin.get( buff , AVR_NAME_LEN);
+	if( buff == NULL )
+	{
+		return NULL;
+	}
+
+	Item *item;
+	size_t lenName = strlen( buff );
+
+	try
+	{
+		item = new Item;
+		item->name = new char[ lenName + 1U ];
+	}
+	catch(...)
+	{
+		if( item != NULL )
+		{
+			delete item;
+		}
+		return NULL;
+	}
+
+	memcpy( item->name, buff, lenName + 1U );
+
+	cout<<"Enter the car brand:\t";		cin.get( buff, 3U);
+	item->brand = (Brand)				atoi( buff );
+
+	cout<<"Enter the car year:\t";		cin.get( buff, 5 );
+	item->color = (unsigned int)		atoi( buff );
+
+	cout<<"Enter the car colo:\t";		cin>> buff;
+	item->year = (unsigned short int)	atoi( buff );
+
+	cout<<"Enter the car milleage:\t";	cin.get( buff, 6U );
+	item->milleage = (unsigned int)		atoi( buff );
+
+	return item;
+}
+
+// Class constructor
 QCars::QCars ( bool compact ) :  QArrSize( 0U )
 {
 	if( compact == false )
@@ -50,7 +99,7 @@ QCars::~QCars ( void )
 	}
 }
 
-//This method allocates memory for the array to queue
+// This method allocates memory for the array element placement queue
 inline bool QCars::Realloc ( void )
 {
 	std::cout<< "REALLOC\n";
@@ -92,7 +141,7 @@ inline bool QCars::Realloc ( void )
 	return true;
 }
 
-// This method adds the element to the normal queue
+// This method adds a new element to the normal queue
 bool QCars::AddNormal ( const Item & item )
 {
 	Node *add;	// New node
@@ -135,7 +184,7 @@ bool QCars::AddNormal ( const Item & item )
 	return true;
 }
 
-// This method adds the element to the compact queue
+// This method adds a new element to the compact queue
 bool QCars::AddCompact ( const Item & item )
 {
 	if( QArrSize == 0U )
@@ -165,7 +214,7 @@ bool QCars::AddCompact ( const Item & item )
 	return true;
 }
 
-// This method removes the tltment of the normal queue
+// This method removes the element with normal queue
 bool QCars::DelNormal ( void )
 {
 	if( nFront == NULL )
@@ -184,7 +233,7 @@ bool QCars::DelNormal ( void )
 	return true;
 }
 
-// This method removes the tltment of the compact queue
+// This method removes the element with compact queue
 bool QCars::DelCompact ( void )
 {
 	Shift *s = new(cFront) Shift;
@@ -196,7 +245,7 @@ bool QCars::DelCompact ( void )
 	return true;
 }
 
-// This method displays information about the car in the normal queue
+// This method displays data element of normal queue on the screen
 void QCars::OutputNormal ( void ) const
 {
 	using std::cout;
@@ -225,7 +274,7 @@ void QCars::OutputNormal ( void ) const
 	cout<< "End of the queue.\n";
 }
 	
-// This method displays information about the car in the compact queue
+// This method displays data element of compact queue on the screen
 void QCars::OutputCompact ( void ) const
 {
 	using std::cout;
@@ -263,7 +312,7 @@ void QCars::OutputCompact ( void ) const
 	cout<< "End of the queue.\n";
 }
 
-// This method places elements of the queue successively in the memory
+// This method places the elements of the queue in memory row
 bool QCars::Compact ( void )
 {
 	if( QArrSize != 0U || nFront == NULL )	// If the queue is compact or empty
@@ -347,7 +396,7 @@ bool QCars::Compact ( void )
 	return true;
 }
 
-// This method places the elements the queue in memory randomly
+// This method places the elements of the queue in memory randomly
 bool QCars::InCompact ( void )
 {
 	if( QArrSize == 0U || cFront == NULL )
