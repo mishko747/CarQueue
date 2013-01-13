@@ -12,13 +12,8 @@
 #define MULT 1.6				// The coefficient reallocation memory to queue
 #define MAX_FILLING 0.8			// The filling coeficient where make changes the size of the array
 #define MIN_FILLING 0.4			// The filling coeficient where make changes the size of the array
-#define AVR_NAME_LEN 15			// Average name length
 
-
-#define ENUMERATION_BEGIN(arg) const char* const arg##_strs[] = {	// Character array elements of enum
-#define DECLARE_MEMBER(arg) #arg
-#include "Brand.h"
-#include "Brand.h"
+#include "Item.h"
 
 #pragma pack(push, 1)
 // Shift from the beginning of the array
@@ -27,26 +22,10 @@ struct Shift
 	size_t Beg;	// to begin of the queue
 	size_t End;	// to end of the queue
 };
-
-// Data structure of the car
-struct Item
-{
-	char *name;						// Name of the owner
-	Brand brand;					// Car brand
-	unsigned long long int year		: 16;	// Year of production car
-	unsigned long long int color	: 24;	// Color of the car
-	unsigned long long int milleage	: 24;	// Mileage
-};
 #pragma pack(pop)
 
 // Size of service data in an array
 const size_t SERVICE_DATA_SIZE = sizeof(Shift); 
-// Size of the structure "Item" without the pointer to the field "name"
-const size_t DATA_ITEM_SIZE = sizeof(Item) - sizeof(char*);
-
-
-Item* InputItem ( void );
-
 
 // Class Queuing for cars
 class QCars
@@ -86,14 +65,14 @@ private:
 	* @param	[in]	item The reference to the data structure of the car
 	* @return	bool
 	*/
-	bool AddNormal ( const Item & item );
+	bool AddNormal ( void );
 
 	/**
 	* @brief	This method adds a new element to the compact queue
 	* @param	[in]	item The reference to the data structure of the car
 	* @return	bool
 	*/
-	bool AddCompact ( const Item & item );
+	bool AddCompact ( void );
 
 	/**
 	* @brief	This method removes the element with normal queue
@@ -140,9 +119,9 @@ public:
 	* @post		Return the value of called function
 	* @return	bool
 	*/
-	inline bool AddItem ( const Item & item )
+	inline bool AddItem ( void )
 	{
-		return QArrSize == 0U ? AddNormal( item ) : AddCompact( item );
+		return QArrSize == 0U ? AddNormal() : AddCompact();
 	}
 
 	/**

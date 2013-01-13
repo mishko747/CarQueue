@@ -6,58 +6,7 @@
  */
 
 #include "QCars.h"
-
 #include <iostream>
-
-
-Item* InputItem ( void )
-{
-	using std::cout;
-	using std::cin;
-	using std::endl;
-
-	char *buff = new char[AVR_NAME_LEN];
-
-	cout<<"Enter the name of the car owner: ";
-	cin.get( buff , AVR_NAME_LEN);
-	if( buff == NULL )
-	{
-		return NULL;
-	}
-
-	Item *item;
-	size_t lenName = strlen( buff );
-
-	try
-	{
-		item = new Item;
-		item->name = new char[ lenName + 1U ];
-	}
-	catch(...)
-	{
-		if( item != NULL )
-		{
-			delete item;
-		}
-		return NULL;
-	}
-
-	memcpy( item->name, buff, lenName + 1U );
-
-	cout<<"Enter the car brand:\t";		cin.get( buff, 3U);
-	item->brand = (Brand)				atoi( buff );
-
-	cout<<"Enter the car year:\t";		cin.get( buff, 5 );
-	item->color = (unsigned int)		atoi( buff );
-
-	cout<<"Enter the car colo:\t";		cin>> buff;
-	item->year = (unsigned short int)	atoi( buff );
-
-	cout<<"Enter the car milleage:\t";	cin.get( buff, 6U );
-	item->milleage = (unsigned int)		atoi( buff );
-
-	return item;
-}
 
 // Class constructor
 QCars::QCars ( bool compact ) :  QArrSize( 0U )
@@ -102,8 +51,6 @@ QCars::~QCars ( void )
 // This method allocates memory for the array element placement queue
 inline bool QCars::Realloc ( void )
 {
-	std::cout<< "REALLOC\n";
-
 	Shift *s = new(cFront) Shift;
 	const size_t DATA_SIZE = s->End - s->Beg;
 
@@ -118,8 +65,6 @@ inline bool QCars::Realloc ( void )
 			QArrSize = (size_t)(QArrSize / MULT);	// Reduction the size of array
 		}
 	}
-
-	std::cout<< "REALLOC QArrSize: " << QArrSize << std::endl;
 
 	// Allocate memory for the array
 	char *tmp = cFront;
@@ -142,20 +87,16 @@ inline bool QCars::Realloc ( void )
 }
 
 // This method adds a new element to the normal queue
-bool QCars::AddNormal ( const Item & item )
+bool QCars::AddNormal ( void )
 {
 	Node *add;	// New node
-	size_t len;	// Length of the field "name"
-
 	try
 	{
-		len = strlen( item.name );
 		add = new Node;
-		// Copying structure without field "name"
-		memcpy(	&add->item.brand, &item.brand, sizeof(Item) );
-		add->item.name = new char[len + 1U];
-		// Copying field of "name"
-		memcpy( add->item.name, item.name, len + 1U );
+		if( InputItem( add->item ) == false )
+		{
+			throw 1;
+		}
 		add->next = NULL;
 	}
 	catch(...)
@@ -185,15 +126,30 @@ bool QCars::AddNormal ( const Item & item )
 }
 
 // This method adds a new element to the compact queue
-bool QCars::AddCompact ( const Item & item )
+bool QCars::AddCompact ( void )
 {
-	if( QArrSize == 0U )
+	Item* item;
+	try
 	{
-		return false;
+		item = new Item;
+		if( InputItem( *item ) == false )
+		{
+			throw 1;
+		}
+	}
+	catch( ... )
+	{
+		if( item != NULL )
+		{
+			if( item->name != NULL )
+			{
+				delete[] item->name;
+			}
+		}
 	}
 
 	Shift *s = new(cFront) Shift;
-	size_t lenName = strlen( item.name ) + 1U;
+	size_t lenName = strlen( item->name ) + 1U;
 
 	// If the element is not placed in allocated memory
 	if( s->End + lenName + DATA_ITEM_SIZE >= QArrSize )
@@ -205,12 +161,16 @@ bool QCars::AddCompact ( const Item & item )
 		s = new(cFront) Shift;
 	}
 
-	memcpy( cRear, item.name, lenName );
+	memcpy( cRear, item->name, lenName );
 	cRear += lenName;
-	memcpy( cRear, &item.brand, DATA_ITEM_SIZE );
+	memcpy( cRear, &item->brand, DATA_ITEM_SIZE );
 	cRear += DATA_ITEM_SIZE;
 
 	s->End = cRear - cFront;
+
+	delete[] item->name;
+	delete item;
+
 	return true;
 }
 
@@ -263,11 +223,11 @@ void QCars::OutputNormal ( void ) const
 	{
 		cout<< "-------------------------------"
 			<< "\nADDR Item:\t"	<< &(temp->item)
-			//<< "\nName: \t"		<< temp->item.name
-			//<< "\nBrand:\t"		<< Brand_strs[temp->item.brand]
-			//<< "\nYear: \t"		<< temp->item.year
-			//<< "\nColor:\t"		<< temp->item.color
-			//<< "\nMileage:"		<< temp->item.milleage
+			<< "\nName: \t"		<< temp->item.name
+			<< "\nBrand:\t"		<< Brand_strs[temp->item.brand]
+			<< "\nYear: \t"		<< temp->item.year
+			<< "\nColor:\t"		<< temp->item.color
+			<< "\nMileage:"		<< temp->item.milleage
 			<< "\n-------------------------------\n";
 	}
 	while( (temp = temp->next) != NULL );

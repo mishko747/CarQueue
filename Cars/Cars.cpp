@@ -34,11 +34,12 @@ void main ( void )
 			"4 - Compact\n"
 			"5 - Incompact\n"
 			"6 - Exit\n"
-			"Enter the menu item: "; cin>> n;
+			"Enter the menu item: ";
+		cin >> n;
 		switch( n )
 		{
 			case 1:	
-				if( q->AddItem( *InputItem() ) == true )
+				if( q->AddItem() == true )
 				{
 					cout<< "Item added.\n";
 				}
@@ -80,8 +81,10 @@ void main ( void )
 					cout<< "Conversion failed.\n";
 				}
 				break;
-			case 6: exit(0);
-			default: cout<<"Incorect input!\n";
+			case 6: 
+				exit(0);
+			default: 
+				cout<<"Incorect input!\n";
 		}
 	}
 	while( CONTINUE, _getch() != CODE_ESC );

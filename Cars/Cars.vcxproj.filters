@@ -13,11 +13,14 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Brand">
-      <UniqueIdentifier>{45ccbdf6-e272-4393-93e7-3812216f1c42}</UniqueIdentifier>
-    </Filter>
     <Filter Include="QCars">
       <UniqueIdentifier>{df6a6812-7a1f-4cad-acc1-abd432b1139f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="QCars\Item">
+      <UniqueIdentifier>{cb47ddbc-b777-4710-8075-d99058cef863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="QCars\Item\Brand">
+      <UniqueIdentifier>{45ccbdf6-e272-4393-93e7-3812216f1c42}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -25,16 +28,19 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Brand.h">
-      <Filter>Brand</Filter>
+      <Filter>QCars\Item\Brand</Filter>
     </ClInclude>
     <ClInclude Include="EnumHelperPre.h">
-      <Filter>Brand</Filter>
+      <Filter>QCars\Item\Brand</Filter>
     </ClInclude>
     <ClInclude Include="EnumHelperPost.h">
-      <Filter>Brand</Filter>
+      <Filter>QCars\Item\Brand</Filter>
     </ClInclude>
     <ClInclude Include="QCars.h">
       <Filter>QCars</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>QCars\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +49,9 @@
     </ClCompile>
     <ClCompile Include="QCars.cpp">
       <Filter>QCars</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>QCars\Item</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
